@@ -1,0 +1,45 @@
+#!/bin/bash
+# This hook installs the dependencies needed to run the charm,
+# creates the dispatch executable, regenerates the symlinks for start and
+# upgrade-charm, and kicks off the operator framework.
+
+set -e
+
+# Source the os-release information into the env
+. /etc/os-release
+
+PYTHON_BIN=/opt/python/python3.12/bin/python3.12
+
+if ! [[ -f '.installed' ]]
+then
+    if [[ ! -e $PYTHON_BIN ]]
+    then
+        if [[ $ID == 'rocky' ]]
+        then
+            # Install dependencies to build custom python
+            yum -y install epel-release
+            yum -y install wget gcc make tar bzip2-devel zlib-devel xz-devel openssl-devel libffi-devel sqlite-devel ncurses-devel xz-devel gdbm tk-devel readline-devel sqlite-devel libnsl2-devel
+
+            # Install yaml deps
+            yum -y install libyaml-devel            
+        fi
+
+        if [[ $ID == 'ubuntu' ]]
+        then
+             # Install dependencies to build custom python
+            apt install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+        fi
+
+        export PYTHON_VERSION=3.12.1
+        wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tar.xz -P /tmp
+        tar xvf /tmp/Python-${PYTHON_VERSION}.tar.xz -C /tmp
+        cd /tmp/Python-${PYTHON_VERSION}
+        ./configure --prefix=/opt/python/python3.12 --enable-optimizations
+        make -C /tmp/Python-${PYTHON_VERSION} -j $(nproc) altinstall
+        cd $OLDPWD
+        rm -rf /tmp/Python*
+    fi
+	touch .installed
+fi
+
+JUJU_DISPATCH_PATH="${JUJU_DISPATCH_PATH:-$0}" PYTHONPATH=lib:venv $PYTHON_BIN ./src/charm.py

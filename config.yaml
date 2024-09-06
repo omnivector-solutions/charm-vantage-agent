@@ -1,0 +1,49 @@
+options:
+  # Resource URL
+  base-api-url:
+    type: string
+    default: ""
+    description: |
+      The License Manager API URL
+
+  # Slurm related setings
+  scontrol-path:
+    type: string
+    default: "/usr/bin/scontrol"
+    description: |
+      Absolute path to the scontrol command
+
+  # Auth related settings
+  oidc-domain:
+    type: string
+    default: ""
+    description: |
+      Domain for the OIDC provider API where auth tokens will be fetched
+  oidc-client-id:
+    type: string
+    default: ""
+    description: |
+      The ID for the OIDC provider app client to which tokens will be issued
+  oidc-client-secret:
+    type: string
+    default: ""
+    description: |
+      The secret key for the OIDC provider app client to which tokens will be issued
+
+  task-jobs-interval-seconds:
+    type: int
+    default: 30
+    description: |
+      The interval in seconds at which the agent will run internal jobs
+  task-self-update-interval-seconds:
+    type: int
+    default: 30
+    description: |
+      The interval in seconds at which the agent will check for version updates
+
+  # Other settings
+  cache-dir:
+    type: string
+    default: "/var/cache/vantage-agent"
+    description: |
+      Absolute path to the cache directory
