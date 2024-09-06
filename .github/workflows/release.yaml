@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Release to latest/edge
+name: Release to Charmhub
 
 on:
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: |
             python3 -m pip install tox==4.18.0
-            snap install charmcraft --channel 2.x/stable
+            snap install charmcraft --channel 3.x/stable
 
       - name: Upload charm to charmhub
         uses: canonical/charming-actions/upload-charm@2.5.0-rc
