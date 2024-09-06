@@ -1,7 +1,7 @@
 */.mypy_cache/
 build/
 *.charm
-license-manager-agent.yaml
+vantage-manager-agent.yaml
 version
 .venv
 .tox

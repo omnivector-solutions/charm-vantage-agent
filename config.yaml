@@ -4,7 +4,7 @@ options:
     type: string
     default: ""
     description: |
-      The License Manager API URL
+      The Vantage API URL
 
   # Slurm related setings
   scontrol-path:
