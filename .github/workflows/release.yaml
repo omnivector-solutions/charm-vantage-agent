@@ -41,6 +41,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          architecture: 'x64'
+
       - name: Select charmhub channel
         uses: canonical/charming-actions/channel@2.5.0-rc
         id: channel
@@ -49,7 +54,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-            python3 -m pip install tox==4.18.0
+            pip install tox==4.18.0
             snap install charmcraft --channel 3.x/stable
 
       - name: Upload charm to charmhub
