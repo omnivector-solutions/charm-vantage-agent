@@ -123,6 +123,8 @@ class VantageAgentCharm(CharmBase):
 
             env_context[setting] = value
 
+            self.vantage_agent_ops.configure_env_defaults(env_context)
+
             mapped_key = setting.replace("-", "_")
             store_value = getattr(self.stored, mapped_key, unset)
             if store_value != value:
