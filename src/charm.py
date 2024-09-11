@@ -72,16 +72,16 @@ class VantageAgentCharm(CharmBase):
         Start vantage-agent.
 
         Check that we have the needed configuration values and whether the
-        cluster agent user is created in the slurmctld node, if so
+        vantage agent user is created in the slurmctld node, if so
         start the vantage-agent otherwise defer the event.
         """
         if not self.stored.config_available:
             event.defer()
             return
 
-        logger.info("## Starting Cluster agent")
+        logger.info("## Starting Vantage agent")
         self.vantage_agent_ops.start_agent()
-        self.unit.status = ActiveStatus("cluster agent started")
+        self.unit.status = ActiveStatus("vantage agent started")
 
     def _on_config_changed(self, event):
         """
