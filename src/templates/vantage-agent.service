@@ -1,0 +1,14 @@
+[Unit]
+Description=vantage-agent
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/srv/vantage-agent-venv
+ExecStart=/srv/vantage-agent-venv/bin/vtg-run
+
+[Install]
+Alias=vantage-agent.service
+WantedBy=multi-user.target

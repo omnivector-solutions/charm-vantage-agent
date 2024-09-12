@@ -1,0 +1,21 @@
+name: Test
+
+on:
+  pull_request:
+  workflow_call:
+
+jobs:
+  lint-charms:
+    name: "Lint the charms"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          architecture: 'x64'
+
+      - name: "Install tox, run 'make lint'"
+        run: |
+          pip install tox==4.18.0
+          tox -e lint

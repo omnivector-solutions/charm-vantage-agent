@@ -1,0 +1,9 @@
+upgrade-vtg:
+  description: >
+    Upgrade vantage agent.
+  params:
+    version:
+      type: string
+      description: Version of vantage agent to upgrade to.
+  required:
+  - version
